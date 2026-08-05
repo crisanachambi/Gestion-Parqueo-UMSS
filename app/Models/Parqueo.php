@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Traits\Auditable;
 
 class Parqueo extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Auditable; 
 
     protected $table = 'parqueos';
 

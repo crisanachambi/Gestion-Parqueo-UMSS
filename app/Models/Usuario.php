@@ -8,10 +8,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;  // base para login
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Traits\Auditable;
 
 class Usuario extends Model
 {
-    use SoftDeletes;   // habilita el borrado lógico (deleted_at)
+    use SoftDeletes, Auditable;   // habilita el borrado lógico (deleted_at)
 
     // Laravel pluraliza en inglés; le decimos la tabla real.
     protected $table = 'usuarios';
