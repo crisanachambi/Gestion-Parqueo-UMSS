@@ -48,5 +48,19 @@ class DatosInicialesSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+        
+         // 4) Algunos espacios de prueba para el parqueo de Economía.
+        for ($i = 1; $i <= 10; $i++) {
+            DB::table('espacios')->insert([
+                'parqueo_id' => $parqueoId,
+                'numero'     => 'A-' . $i,
+                'tipo'       => 'auto',
+                // Dejamos algunos ocupados para que el dashboard muestre variedad:
+                'estado'     => $i <= 3 ? 'ocupado' : 'libre',
+                'created_by' => $usuarioId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }
