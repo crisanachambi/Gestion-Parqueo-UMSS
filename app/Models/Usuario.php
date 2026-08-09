@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;  // base para login
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\SoftDeletes as EloquentSoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Traits\Auditable;
+use Illuminate\Notifications\Notifiable;
 
 class Usuario extends Model
 {
-    use SoftDeletes, Auditable;   // habilita el borrado lógico (deleted_at)
+    use SoftDeletes, Auditable, Notifiable;    // habilita el borrado lógico (deleted_at) 
 
     // Laravel pluraliza en inglés; le decimos la tabla real.
     protected $table = 'usuarios';
