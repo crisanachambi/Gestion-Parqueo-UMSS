@@ -97,14 +97,21 @@
                      <p class="text-center ummss-subtitle mb-4">Inicia sesión para continuar</p>
 
                      <!-- MISMO FORMULARIO ORIGINAL: mismos IDs, mismo required, mismo novalidate -->
-                     <form id="loginForm" novalidate>
+                     <form id="loginForm" method="POST" action="{{ route('login.attempt') }}" novalidate>
+                        @csrf
+
+                        @if ($errors->any())
+                           <div class="alert alert-danger" role="alert">
+                              {{ $errors->first() }}
+                           </div>
+                        @endif
                         <div class="form-group">
                            <label for="exampleInputEmail1" class="ummss-label">USUARIO</label>
                            <div class="input-group with-focus">
                               <div class="input-group-prepend">
                                  <span class="input-group-text bg-transparent border-right-0"><em class="fas fa-user"></em></span>
                               </div>
-                              <input class="form-control border-left-0" id="exampleInputEmail1" type="email" placeholder="Ingresa tu usuario" autocomplete="off" required>
+                              <input class="form-control border-left-0" id="exampleInputEmail1" name="email" type="email" value="{{ old('email') }}" placeholder="Ingresa tu correo" autocomplete="email" required>
                            </div>
                         </div>
                         <div class="form-group">
@@ -113,7 +120,7 @@
                               <div class="input-group-prepend">
                                  <span class="input-group-text bg-transparent border-right-0"><em class="fas fa-lock"></em></span>
                               </div>
-                              <input class="form-control border-left-0 border-right-0" id="exampleInputPassword1" type="password" placeholder="Ingresa tu contraseña" required>
+                              <input class="form-control border-left-0 border-right-0" id="exampleInputPassword1" name="password" type="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
                               <div class="input-group-append">
                                  <span class="input-group-text bg-transparent border-left-0 ummss-pass-toggle" id="ummssTogglePassword" role="button">
                                     <em class="fas fa-eye"></em>

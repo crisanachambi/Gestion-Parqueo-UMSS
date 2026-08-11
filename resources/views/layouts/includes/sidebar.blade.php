@@ -6,7 +6,7 @@
       <nav class="sidebar" data-sidebar-anyclick-close>
          <ul class="sidebar-nav">
 
-            <!-- Info Usuario -->
+            <!-- Info Usuario Autenticado -->
             <li class="has-user-block">
                <div id="user-block" class="collapse show">
                   <div class="item user-block">
@@ -15,8 +15,12 @@
                            <img class="img-thumbnail rounded-circle" src="{{ asset('img/user/02.jpg') }}" alt="Avatar" width="60" height="60">
                         </div>
                         <div class="user-block-info">
-                           <span class="user-block-name">Bienvenido</span>
-                           <span class="user-block-role">Administrador</span>
+                           <span class="user-block-name">
+                              {{ Auth::user()?->nombre ?? 'Usuario' }} {{ Auth::user()?->apellido }}
+                           </span>
+                           <span class="user-block-role text-capitalize">
+                              {{ Auth::user()?->rol == 'encargado' ? 'Encargado de Parqueo' : (Auth::user()?->rol ?? 'Cliente') }}
+                           </span>
                         </div>
                      </div>
                   </div>
@@ -25,15 +29,15 @@
 
             <!-- 1. Dashboard -->
             <li class="{{ request()->is('dashboard*') ? 'active' : '' }}">
-               <a href="{{ url('/dashboard') }}" title="Dashboard">
+               <a href="{{ route('dashboard') }}" title="Dashboard">
                   <em class="fas fa-tachometer-alt"></em>
                   <span>Dashboard</span>
                </a>
             </li>
 
-            <!-- 2. Usuarios y Vehículos (Submenú colapsable) -->
+            <!-- 2. Usuarios y Vehículos (Submenú colapsable corregido) -->
             <li class="{{ request()->is('usuarios*') || request()->is('vehiculos*') ? 'active' : '' }}">
-               <a href="{{ route('usuarios.index') }}" title="Usuarios y Vehículos">
+               <a href="#users-vehicles" data-toggle="collapse" title="Usuarios y Vehículos">
                   <em class="fas fa-users-cog"></em>
                   <span>Usuarios y Vehículos</span>
                </a>
@@ -49,8 +53,8 @@
             </li>
 
             <!-- 3. Control de Acceso -->
-            <li class="{{ request()->is('control-acceso*') ? 'active' : '' }}">
-               <a href="{{ url('/control-acceso') }}" title="Control de Acceso">
+            <li class="{{ request()->is('registros*') || request()->is('control-acceso*') ? 'active' : '' }}">
+               <a href="{{ url('/registros') }}" title="Control de Acceso">
                   <em class="fas fa-door-open"></em>
                   <span>Control de Acceso</span>
                </a>
@@ -64,19 +68,19 @@
                </a>
             </li>
 
-            <!-- 5. Reportes -->
-            <li class="{{ request()->is('reportes*') ? 'active' : '' }}">
-               <a href="{{ url('/reportes') }}" title="Reportes">
-                  <em class="fas fa-file-invoice"></em>
-                  <span>Reportes</span>
+            <!-- 5. Espacios y Capacidad -->
+            <li class="{{ request()->is('espacios*') ? 'active' : '' }}">
+               <a href="{{ url('/espacios') }}" title="Gestión de Espacios">
+                  <em class="fas fa-parking"></em>
+                  <span>Espacios</span>
                </a>
             </li>
 
-            <!-- 6. Ajustes del Parqueo -->
-            <li class="{{ request()->is('ajustes*') ? 'active' : '' }}">
-               <a href="{{ url('/ajustes') }}" title="Ajustes del Parqueo">
-                  <em class="fas fa-cogs"></em>
-                  <span>Ajustes del Parqueo</span>
+            <!-- 6. Pagos y Recargas -->
+            <li class="{{ request()->is('pagos*') || request()->is('recargas*') ? 'active' : '' }}">
+               <a href="{{ url('/pagos') }}" title="Pagos y Recargas">
+                  <em class="fas fa-money-bill-wave"></em>
+                  <span>Pagos y Recargas</span>
                </a>
             </li>
 
