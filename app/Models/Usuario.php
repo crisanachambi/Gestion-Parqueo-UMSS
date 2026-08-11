@@ -3,35 +3,44 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;  // base para login
-use Illuminate\Database\Eloquent\SoftDeletes as EloquentSoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Base obligatoria para autenticación
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Traits\Auditable;
 use Illuminate\Notifications\Notifiable;
 
-class Usuario extends Model
+class Usuario extends Authenticatable
 {
-    use SoftDeletes, Auditable, Notifiable;    // habilita el borrado lógico (deleted_at) 
+    use HasFactory, SoftDeletes, Auditable, Notifiable;
 
-    // Laravel pluraliza en inglés; le decimos la tabla real.
+    // Nombre exacto de la tabla en la BD
     protected $table = 'usuarios';
 
-    // Campos que se pueden asignar de forma masiva (create/update).
+    // Campos asignables de forma masiva
     protected $fillable = [
-        'nombre', 'email', 'password', 'rol',
-        'telefono', 'categoria', 'activo',
-        'created_by', 'updated_by', 'deleted_by',
+        'nombre', 
+        'email', 
+        'password', 
+        'rol',
+        'telefono', 
+        'categoria', 
+        'activo',
+        'created_by', 
+        'updated_by', 
+        'deleted_by',
     ];
 
-    // Campos que nunca se muestran al serializar (por seguridad).
-    protected $hidden = ['password'];
+    // Campos ocultos al serializar
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    // Conversión automática de tipos.
+    // Conversión automática de tipos
     protected $casts = [
         'activo'   => 'boolean',
-        'password' => 'hashed',   // hashea la contraseña automáticamente al asignarla
+        'password' => 'hashed',
     ];
 
     // --- Relaciones ---
