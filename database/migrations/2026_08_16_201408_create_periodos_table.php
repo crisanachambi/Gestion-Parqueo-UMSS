@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,13 +12,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('espacios', function (Blueprint $table) {
+        Schema::create('periodos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parqueo_id')
                   ->constrained('parqueos')->cascadeOnUpdate()->restrictOnDelete();
-            $table->string('numero', 10);           // A-01, M-01...
-            $table->enum('tipo', ['moto', 'auto'])->default('auto');
-            $table->enum('estado', ['libre', 'ocupado'])->default('libre');
+            $table->string('nombre', 40);           // manana / tarde / noche
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
+            $table->unsignedTinyInteger('orden');   // 1, 2 o 3
  
             $table->timestamps();
             $table->softDeletes();
@@ -25,22 +27,18 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
- 
-            $table->tinyInteger('vigente')->storedAs('IF(deleted_at IS NULL, 1, NULL)');
- 
-            $table->unique(['parqueo_id', 'numero', 'vigente'], 'espacios_parqueo_numero_uq');
-            // La app movil consulta disponibilidad con este indice.
-            $table->index(['parqueo_id', 'tipo', 'estado'], 'espacios_disponibles_idx');
         });
+ 
+        DB::statement("ALTER TABLE periodos
+            ADD CONSTRAINT periodos_horas_chk CHECK (hora_fin > hora_inicio)");
+        DB::statement("ALTER TABLE periodos
+            ADD CONSTRAINT periodos_orden_chk CHECK (orden BETWEEN 1 AND 3)");
     }
-
-    /**
-     * Reverse the migrations.
-     */
+ 
     public function down(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('espacios');
+        Schema::dropIfExists('periodos');
         Schema::enableForeignKeyConstraints();
     }
 };

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,13 +12,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('espacios', function (Blueprint $table) {
+        // Una tarjeta por usuario Y parqueo, con su propio saldo.
+        // Reemplaza a la antigua tabla `saldos`.
+        Schema::create('tarjetas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('usuario_id')
+                  ->constrained('usuarios')->cascadeOnUpdate()->restrictOnDelete();
             $table->foreignId('parqueo_id')
                   ->constrained('parqueos')->cascadeOnUpdate()->restrictOnDelete();
-            $table->string('numero', 10);           // A-01, M-01...
-            $table->enum('tipo', ['moto', 'auto'])->default('auto');
-            $table->enum('estado', ['libre', 'ocupado'])->default('libre');
+            $table->string('codigo_rfid', 32);
+            $table->decimal('saldo', 8, 2)->default(0);
+            $table->enum('estado', ['activa', 'bloqueada'])->default('activa');
  
             $table->timestamps();
             $table->softDeletes();
@@ -28,10 +33,12 @@ return new class extends Migration
  
             $table->tinyInteger('vigente')->storedAs('IF(deleted_at IS NULL, 1, NULL)');
  
-            $table->unique(['parqueo_id', 'numero', 'vigente'], 'espacios_parqueo_numero_uq');
-            // La app movil consulta disponibilidad con este indice.
-            $table->index(['parqueo_id', 'tipo', 'estado'], 'espacios_disponibles_idx');
+            $table->unique(['codigo_rfid', 'vigente'], 'tarjetas_rfid_uq');
+            $table->unique(['usuario_id', 'parqueo_id', 'vigente'], 'tarjetas_usuario_parqueo_uq');
         });
+ 
+        DB::statement("ALTER TABLE tarjetas
+            ADD CONSTRAINT tarjetas_saldo_chk CHECK (saldo >= 0)");
     }
 
     /**
@@ -40,7 +47,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('espacios');
+        Schema::dropIfExists('tarjetas');
         Schema::enableForeignKeyConstraints();
     }
 };
