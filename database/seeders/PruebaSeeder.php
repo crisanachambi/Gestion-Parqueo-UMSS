@@ -46,7 +46,7 @@ class PruebaSeeder extends Seeder
 
     public function run(): void
     {
-        this->crearEncargados();
+        $this->crearEncargados();
         $this->crearClienteCompartido();
         $this->crearClienteSinTarjeta();
  
