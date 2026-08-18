@@ -3,6 +3,8 @@
 namespace App\Models\Traits;
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\Traits\Auditable;
+use App\Models\Traits\PerteneceAParqueo;
 
 trait Auditable
 {
