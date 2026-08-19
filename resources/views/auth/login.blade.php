@@ -6,23 +6,23 @@
    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
    <meta name="description" content="Sistema de Parqueos UMSS - Bootstrap Admin App">
    <meta name="keywords" content="app, responsive, jquery, bootstrap, admin, ummss, parqueos">
-   <link rel="icon" type="image/x-icon" href="favicon.ico">
+   <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
    <title>UMSS Parqueos - Iniciar Sesión</title>
    <!-- =============== VENDOR STYLES ===============-->
    <!-- FONT AWESOME-->
-   <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free/css/brands.css">
-   <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free/css/regular.css">
-   <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free/css/solid.css">
-   <link rel="stylesheet" href="vendor/@fortawesome/fontawesome-free/css/fontawesome.css">
+   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/brands.css') }}">
+   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/regular.css') }}">
+   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/solid.css') }}">
+   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/fontawesome.css') }}">
    <!-- ANIMATE.CSS-->
-   <link rel="stylesheet" href="vendor/animate.css/animate.css">
+   <link rel="stylesheet" href="{{ asset('vendor/animate.css/animate.css') }}">
    <!-- =============== BOOTSTRAP STYLES ===============-->
-   <link rel="stylesheet" href="css/bootstrap.css" id="bscss">
+   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" id="bscss">
    <!-- =============== APP STYLES ===============-->
-   <link rel="stylesheet" href="css/app.css" id="maincss">
+   <link rel="stylesheet" href="{{ asset('css/app.css') }}" id="maincss">
    <!-- =============== UMSS CUSTOM STYLES (no se toca app.css) ===============-->
    <!-- Esta hoja SOLO sobreescribe estilos visuales. No agrega ni quita funcionalidad. -->
-   <link rel="stylesheet" href="css/custom-login.css" id="ummsscss">
+   <link rel="stylesheet" href="{{ asset('css/custom-login.css') }}" id="ummsscss">
 </head>
 
 <body class="ummss-login-page">
@@ -42,7 +42,7 @@
 
                <div class="ummss-brand-content text-center animated fadeIn">
                   <!-- LOGO GRANDE -->
-                  <img src="img/logo-ummss.png" alt="UMSS Parqueos" class="ummss-logo-large mb-4">
+                  <img src="{{ asset('img/logo-ummss.png') }}" alt="UMSS Parqueos" class="ummss-logo-large mb-4">
 
                   <!-- Wordmark minimalista en lugar del texto largo original -->
                   <div class="ummss-wordmark mb-5">U M S S</div>
@@ -76,7 +76,7 @@
                   <div class="ummss-brand-footer-tag">
                      <span class="text-blue">DIGITAL</span> &bull; SEGURO &bull; <span class="text-red">EFICIENTE</span>
                   </div>
-                  <div class="ummss-brand-footer-copy">&copy; 2026 UMSS Parqueos - Todos los derechos reservados</div>
+                  <div class="ummss-brand-footer-copy">&copy; {{ date('Y') }} UMSS Parqueos - Todos los derechos reservados</div>
                </div>
             </div>
 
@@ -88,7 +88,7 @@
                   <div class="card-header text-center bg-transparent border-0">
                      <!-- Logo pequeño solo visible cuando el branding grande está oculto (móvil/tablet) -->
                      <a href="#" class="d-lg-none d-inline-block mb-2">
-                        <img class="ummss-logo-small" src="img/logo-ummss.png" alt="UMSS">
+                        <img class="ummss-logo-small" src="{{ asset('img/logo-ummss.png') }}" alt="UMSS">
                      </a>
                   </div>
                   <div class="card-body">
@@ -100,18 +100,22 @@
                      <form id="loginForm" method="POST" action="{{ route('login.attempt') }}" novalidate>
                         @csrf
 
+                        {{-- Mensajes del ControllerLogin: credenciales
+                             incorrectas, cuenta sin parqueo, etc. --}}
                         @if ($errors->any())
                            <div class="alert alert-danger" role="alert">
+                              <em class="fas fa-exclamation-circle mr-1"></em>
                               {{ $errors->first() }}
                            </div>
                         @endif
+
                         <div class="form-group">
                            <label for="exampleInputEmail1" class="ummss-label">USUARIO</label>
                            <div class="input-group with-focus">
                               <div class="input-group-prepend">
                                  <span class="input-group-text bg-transparent border-right-0"><em class="fas fa-user"></em></span>
                               </div>
-                              <input class="form-control border-left-0" id="exampleInputEmail1" name="email" type="email" value="{{ old('email') }}" placeholder="Ingresa tu correo" autocomplete="email" required>
+                              <input class="form-control border-left-0" id="exampleInputEmail1" name="email" type="email" value="{{ old('email') }}" placeholder="Ingresa tu usuario" autocomplete="email" required>
                            </div>
                         </div>
                         <div class="form-group">
@@ -130,7 +134,7 @@
                         </div>
                         <div class="clearfix">
                            <div class="custom-control custom-checkbox float-left mt-0">
-                              <input class="custom-control-input" id="rememberme" type="checkbox" name="remember">
+                              <input class="custom-control-input" id="rememberme" type="checkbox" name="remember" value="1" {{ old('remember') ? 'checked' : '' }}>
                               <label class="custom-control-label ummss-remember-label" for="rememberme">Recordarme</label>
                            </div>
                            
@@ -144,7 +148,7 @@
 
         
                      <p class="pt-3 text-center ummss-register-text">
-                        <a class="ummss-link" href="register.html">¿Olvidaste tu contraseña?</a>
+                        <a class="ummss-link" href="#">¿Olvidaste tu contraseña?</a>
                      </p>
                   </div>
                </div>
@@ -157,19 +161,19 @@
 
    <!-- =============== VENDOR SCRIPTS (sin tocar) ===============-->
    <!-- STORAGE API-->
-   <script src="vendor/js-storage/js.storage.js"></script>
+   <script src="{{ asset('vendor/js-storage/js.storage.js') }}"></script>
    <!-- i18next-->
-   <script src="vendor/i18next/i18next.js"></script>
-   <script src="vendor/i18next-xhr-backend/i18nextXHRBackend.js"></script>
+   <script src="{{ asset('vendor/i18next/i18next.js') }}"></script>
+   <script src="{{ asset('vendor/i18next-xhr-backend/i18nextXHRBackend.js') }}"></script>
    <!-- JQUERY-->
-   <script src="vendor/jquery/dist/jquery.js"></script>
+   <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
    <!-- BOOTSTRAP-->
-   <script src="vendor/popper.js/dist/umd/popper.js"></script>
-   <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
+   <script src="{{ asset('vendor/popper.js/dist/umd/popper.js') }}"></script>
+   <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
    <!-- PARSLEY-->
-   <script src="vendor/parsleyjs/dist/parsley.js"></script>
+   <script src="{{ asset('vendor/parsleyjs/dist/parsley.js') }}"></script>
    <!-- =============== APP SCRIPTS (sin tocar) ===============-->
-   <script src="js/app.js"></script>
+   <script src="{{ asset('js/app.js') }}"></script>
 
    <!-- =============== SCRIPT ADICIONAL UMSS: solo toggle de contraseña (no afecta app.js) ===============-->
    <script>
