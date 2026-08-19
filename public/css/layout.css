@@ -1,0 +1,149 @@
+/* ===================================================
+   PARKUMSS - LAYOUT & THEME STYLES (layout.css)
+   =================================================== */
+
+:root {
+  --umss-navy: #0b1b3d;          /* Color institucional principal */
+  --umss-navy-card: #122448;     /* Fondo del bloque Parqueo Activo */
+  --umss-blue-active: #0045c7;   /* Resaltado del menú seleccionado */
+  --umss-cyan: #00a8ff;
+  --umss-red: #e61c24;
+}
+
+/* ---------------------------------------------------
+   1. TOPBAR / HEADER
+   --------------------------------------------------- */
+.topnavbar {
+  background-color: var(--umss-navy) !important;
+  min-height: 60px;
+}
+
+.navbar-title {
+  font-size: 15px;
+}
+
+.header-clock {
+  font-size: 13px;
+}
+
+.header-parqueo-badge .btn {
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* ---------------------------------------------------
+   2. SIDEBAR LATERAL
+   --------------------------------------------------- */
+.aside-container, 
+.aside-inner {
+  background-color: var(--umss-navy) !important;
+  color: #ffffff;
+  height: 100vh;
+}
+
+/* Logo */
+.sidebar-brand-logo {
+  width: 85px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.4));
+}
+
+.sidebar-brand h4 {
+  font-size: 16px;
+}
+
+.sidebar-brand small {
+  font-size: 11px;
+}
+
+/* Parqueo Activo Card */
+.bg-dark-light {
+  background-color: var(--umss-navy-card) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lbl-parqueo-titulo {
+  font-size: 9px;
+}
+
+.lbl-parqueo-nombre {
+  font-size: 13px;
+}
+
+/* Menú de Navegación */
+.sidebar-nav .nav {
+  padding: 0 10px;
+}
+
+.sidebar-nav .nav > li {
+  margin-bottom: 4px;
+}
+
+.sidebar-nav .nav > li > a {
+  color: #c2cfd6 !important;
+  border-radius: 10px;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.25s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-nav .nav > li > a:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
+.sidebar-nav .nav > li.active > a {
+  background-color: var(--umss-blue-active) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 69, 199, 0.4);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------
+   3. SECCIÓN INFERIOR Y USUARIO
+   --------------------------------------------------- */
+.sidebar-footer-slogan {
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.slogan-digital { color: var(--umss-cyan); }
+.slogan-seguro  { color: #ffffff; }
+.slogan-eficiente { color: var(--umss-red); }
+
+.user-block-bottom {
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.user-avatar-circle {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.user-name {
+  font-size: 13px;
+}
+
+.user-role {
+  font-size: 11px;
+}
+
+/* ---------------------------------------------------
+   4. FOOTER
+   --------------------------------------------------- */
+.footer-container {
+  font-size: 12px;
+  background-color: #ffffff;
+}

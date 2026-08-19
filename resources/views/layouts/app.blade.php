@@ -1,61 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
- 
 <head>
-   <meta charset="utf-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-   <meta name="description" content="Sistema de Gestión de Parqueo">
-   <title>@yield('title', 'Sistema de Parqueo')</title>
- 
-   <!-- =============== VENDOR STYLES ===============-->
-   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/brands.css') }}">
-   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/regular.css') }}">
-   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/solid.css') }}">
-   <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/fontawesome.css') }}">
-   <link rel="stylesheet" href="{{ asset('vendor/animate.css/animate.css') }}">
- 
-   <!-- =============== BOOTSTRAP STYLES ===============-->
-   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" id="bscss">
- 
-   <!-- =============== APP STYLES ===============-->
-   <link rel="stylesheet" href="{{ asset('css/app.css') }}" id="maincss">
-   @stack('styles')
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <title>@yield('title', 'ParkUMSS - Sistema de Gestión de Parqueos')</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="{{ asset('img/logo-ummss.png') }}">
+
+  <!-- 1. Bootstrap y FontAwesome (Librerías Base) -->
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
+
+  <!-- 2. Plantilla Base 47Admin -->
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+  <!-- 3. Estilos Personalizados ParkUMSS (Color #0b1b3d, Mapa de Parqueo, KPIs) -->
+  <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+
+  <!-- Estilos adicionales por vista -->
+  @stack('styles')
 </head>
- 
-<body>
-   <div class="wrapper">
- 
-      @include('layouts.includes.header')
- 
-      @include('layouts.includes.sidebar')
- 
-      <!-- ========================================================= -->
-      <!-- CONTENIDO PRINCIPAL                                       -->
-      <!-- ========================================================= -->
-      <section class="section-container">
-         <div class="content-wrapper">
-            <div class="content-header">
-               <div class="content-title">
-                  @yield('page-title', 'Dashboard')
-                  <br><small>@yield('page-subtitle', 'Bienvenido al sistema')</small>
-               </div>
-               @yield('header-actions')
-            </div>
- 
-            <!-- Inyección de la vista del hijo -->
-            @yield('content')
-         </div>
-      </section>
- 
-      @include('layouts.includes.footer')
- 
-   </div>
- 
-   <!-- =============== SCRIPTS ===============-->
-   <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
-   <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.bundle.js') }}"></script>
-   <script src="{{ asset('js/app.js') }}"></script>
-   @stack('scripts')
+
+<body class="layout-fixed">
+  <div class="wrapper">
+    
+    <!-- 1. Sidebar / Menú Lateral (Cargado primero para alineación absoluta desde arriba) -->
+    @include('layouts.sidebar')
+
+    <!-- 2. Header / Navbar Superior (Empieza a la derecha del Sidebar) -->
+    @include('layouts.header')
+
+    <!-- 3. Contenido Principal Dinámico -->
+    <section class="section-container">
+      <div class="content-wrapper">
+        @yield('content')
+      </div>
+    </section>
+
+    <!-- Footer / Pie de Página -->
+    @include('layouts.footer')
+
+  </div>
+
+  <!-- Scripts Base de 47admin y Bootstrap -->
+  <script src="{{ asset('js/app.js') }}"></script>
+
+  <!-- Script para el Reloj en Tiempo Real -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function updateClock() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('es-BO', { 
+          hour: '2-digit', 
+          minute: '2-digit', 
+          second: '2-digit',
+          hour12: true 
+        });
+        const clockElem = document.getElementById('live-clock');
+        if (clockElem) {
+          clockElem.textContent = timeString;
+        }
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+    });
+  </script>
+
+  @stack('scripts')
 </body>
- 
 </html>
