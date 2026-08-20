@@ -12,7 +12,10 @@
 
   <!-- 1. Bootstrap y FontAwesome (Librerías Base) -->
   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
-  <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/fontawesome.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/solid.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/regular.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendor/@fortawesome/fontawesome-free/css/brands.css') }}">
 
   <!-- 2. Plantilla Base 47Admin -->
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -46,9 +49,8 @@
   </div>
 
   <!-- Scripts Base de 47admin y Bootstrap -->
-  <script src="{{ asset('js/app.js') }}"></script>
   <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
-  script src="{{ asset('vendor/popper.js/dist/umd/popper.js') }}"></script>
+  <script src="{{ asset('vendor/popper.js/dist/umd/popper.js') }}"></script>
   <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
   <script src="{{ asset('js/app.js') }}"></script>
 

@@ -39,6 +39,12 @@ class Usuario extends Authenticatable
     {
         return $this->hasMany(Tarjeta::class);
     }
+
+    /** Tarjeta vigente del usuario en el parqueo de la sesión. */
+    public function tarjetaActual()
+    {
+        return $this->hasOne(Tarjeta::class);
+    }
  
     /** Parqueo que administra (solo encargados) */
     public function parqueoAsignado()

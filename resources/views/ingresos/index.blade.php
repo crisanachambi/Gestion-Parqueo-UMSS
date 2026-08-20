@@ -7,26 +7,28 @@
 @endpush
 
 @section('content')
-<div class="content-wrapper">
+<div class="container-fluid py-2">
 
-   <!-- Encabezado Estático -->
+   <!-- Encabezado Principal -->
    <div class="content-heading d-flex justify-content-between align-items-center mb-4">
       <div>
          <h3 class="m-0 font-weight-bold" style="color: #0b1b3d;">Registrar ingreso</h3>
-         <small class="text-muted">Gestión de accesos y asignación de espacios</small>
+         <small class="text-muted">Gestión de accesos y asignación de espacios en tiempo real</small>
       </div>
       <div>
-         <span class="label label-success p-2 font-weight-bold">
-            <em class="fa fa-parking mr-1"></em> {{ $parqueo->nombre }}
+         <span class="badge badge-pill border-0 px-3 py-2 font-weight-bold shadow-sm" style="background-color: #e6f7f0; color: #0d8a52; font-size: 0.85rem;">
+            <i class="fas fa-parking mr-1"></i> {{ $parqueo->nombre }}
          </span>
       </div>
    </div>
 
    {{-- Pantalla/Alerta de Confirmación Exitosa --}}
-   <div id="pantalla-exito" class="hidden text-center pv-xl">
-      <em class="fa fa-check-circle fa-4x text-success mb-3 block"></em>
-      <h3 class="text-success font-weight-bold m0">Ingreso registrado</h3>
-      <p class="text-muted font-weight-bold mt-2" id="texto-espacio-confirmado">Espacio A00</p>
+   <div id="pantalla-exito" class="hidden text-center py-5 card border-0 shadow-sm rounded-lg mb-4">
+      <div class="card-body">
+         <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+         <h3 class="text-success font-weight-bold m-0">¡Ingreso registrado correctamente!</h3>
+         <p class="text-muted font-weight-bold mt-2 h5" id="texto-espacio-confirmado">Espacio A00</p>
+      </div>
    </div>
 
    {{-- Formulario Principal --}}
@@ -37,27 +39,54 @@
 
       <div class="row" id="contenedor-principal">
          
-         <!-- COLUMNA IZQUIERDA: CONTROLES DE ENTRADA -->
-         <div class="col-md-5">
-            <!-- 1. Estático: Selector de Modo -->
-            @include('ingresos.partials.selector-modo')
+         <!-- COLUMNA IZQUIERDA: CONTROLES Y DATOS DE ENTRADA -->
+         <div class="col-lg-5 col-md-12 mb-4">
+            
+            <!-- Contenedor 1: Controles de Acceso (Modo, RFID / Visitante) -->
+            <div class="card border-0 shadow-sm rounded-lg mb-4">
+               <div class="card-header bg-white border-bottom py-3">
+                  <h5 class="card-title font-weight-bold mb-0" style="color: #0b1b3d;">
+                     <i class="fas fa-id-card text-primary mr-2"></i> Datos de Acceso
+                  </h5>
+               </div>
+               <div class="card-body">
+                  <!-- 1. Selector de Modo -->
+                  @include('ingresos.partials.selector-modo')
 
-            <!-- 2. Dinámico: Panel RFID (Lector) -->
-            @include('ingresos.partials.panel-rfid')
+                  <!-- 2. Panel RFID (Lector) -->
+                  @include('ingresos.partials.panel-rfid')
 
-            <!-- 3. Dinámico: Ficha del Usuario (RFID Escaneado) -->
-            @include('ingresos.partials.panel-info-usuario')
+                  <!-- 3. Ficha del Usuario (RFID Escaneado) -->
+                  @include('ingresos.partials.panel-info-usuario')
 
-            <!-- 4. Dinámico: Formulario Visitante Manual -->
-            @include('ingresos.partials.panel-visitante')
+                  <!-- 4. Formulario Visitante Manual -->
+                  @include('ingresos.partials.panel-visitante')
+               </div>
+            </div>
 
-            <!-- 5. Estático/Dinámico: Banner Espacio + Botón Confirmar -->
-            @include('ingresos.partials.boton-confirmar')
+            <!-- Contenedor 2: Confirmación y Resumen -->
+            <div class="card border-0 shadow-sm rounded-lg">
+               <div class="card-body">
+                  <!-- 5. Banner Espacio + Botón Confirmar -->
+                  @include('ingresos.partials.boton-confirmar')
+               </div>
+            </div>
+
          </div>
 
          <!-- COLUMNA DERECHA: GRILLA DE ESPACIOS -->
-         <div class="col-md-7">
-            @include('ingresos.partials.mapa-espacios')
+         <div class="col-lg-7 col-md-12">
+            <div class="card border-0 shadow-sm rounded-lg">
+               <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                  <h5 class="card-title font-weight-bold mb-0" style="color: #0b1b3d;">
+                     <i class="fas fa-th text-primary mr-2"></i> Mapa de Espacios
+                  </h5>
+                  <small class="text-muted">Seleccione un sitio libre para asignar</small>
+               </div>
+               <div class="card-body">
+                  @include('ingresos.partials.mapa-espacios')
+               </div>
+            </div>
          </div>
 
       </div>

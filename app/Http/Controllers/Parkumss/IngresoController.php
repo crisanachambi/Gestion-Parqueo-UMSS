@@ -237,30 +237,74 @@ class IngresoController extends Controller
             'parqueo' => auth()->user()->parqueoAsignado,
         ]);
     }
+
+    /** Datos calculados que consume el modal antes de registrar la salida. */
+    public function previewSalida(RegistroIngreso $registro)
+    {
+        abort_unless($registro->estaActivo(), 422, 'Este registro ya fue cerrado.');
+
+        $registro->loadMissing(['vehiculo', 'espacio', 'tarjeta.usuario']);
+        $cobro = $registro->cobroEstimado();
+        $tarjeta = $registro->tarjeta;
+
+        return response()->json([
+            'registro_id'      => $registro->id,
+            'placa'            => $registro->placa,
+            'titular'          => $registro->esVisitante() ? 'Visitante' : $tarjeta->usuario->nombre_completo,
+            'espacio'          => $registro->espacio?->numero ?? '--',
+            'tipo'             => $registro->tipo_vehiculo,
+            'es_visitante'     => $registro->esVisitante(),
+            'modo'             => $registro->metodo_pago,
+            'hora_entrada'     => $registro->hora_ingreso->format('h:i A'),
+            'hora_salida'      => now()->format('h:i A'),
+            'tiempo_total'     => $registro->duracion,
+            'periodos'         => $cobro['periodos'],
+            'tarifa_unitaria'  => number_format($registro->parqueo->tarifaPara($registro->tipo_vehiculo), 2, '.', ''),
+            'monto_total'      => number_format($cobro['monto'], 2, '.', ''),
+            'saldo_disponible' => $tarjeta ? number_format($tarjeta->saldo, 2, '.', '') : '0.00',
+            'tarjeta_id'       => $tarjeta?->id,
+            'codigo_rfid'      => $tarjeta?->codigo_rfid,
+        ]);
+    }
  
     /**
      * Cobra, cierra el registro y libera el espacio.
      * El calculo es el mismo para clientes y visitantes.
      */
-    public function salida(RegistroIngreso $registro)
+    public function salida(Request $request, RegistroIngreso $registro)
     {
         if (! $registro->estaActivo()) {
             return back()->withErrors('Este registro ya fue cerrado.');
         }
  
+        $datos = $request->validate([
+            'metodo_pago' => ['required', 'in:efectivo,tarjeta'],
+            'codigo_rfid' => ['nullable', 'string', 'max:32'],
+        ]);
+
         $salida      = now();
         $cobro       = $registro->cobroEstimado();
         $esVisitante = $registro->esVisitante();
         $tarjeta     = $registro->tarjeta;
  
-        if (! $esVisitante && $tarjeta->saldo < $cobro['monto']) {
+        $usarEfectivo = $esVisitante || $datos['metodo_pago'] === 'efectivo';
+
+        if (! $esVisitante && $usarEfectivo && $tarjeta->saldo >= $cobro['monto']) {
+            return response()->json(['message' => 'Esta salida debe autorizarse con la tarjeta RFID.'], 422);
+        }
+
+        if (! $esVisitante && ! $usarEfectivo && $datos['codigo_rfid'] !== $tarjeta->codigo_rfid) {
+            return response()->json(['message' => 'La tarjeta leída no corresponde al titular.'], 422);
+        }
+
+        if (! $usarEfectivo && $tarjeta->saldo < $cobro['monto']) {
             return back()->withErrors(
                 "Saldo insuficiente: debe {$cobro['monto']} Bs y tiene {$tarjeta->saldo} Bs. " .
                 'Recargue la tarjeta antes de registrar la salida.'
             );
         }
  
-        DB::transaction(function () use ($registro, $tarjeta, $cobro, $salida, $esVisitante) {
+        DB::transaction(function () use ($registro, $tarjeta, $cobro, $salida, $usarEfectivo) {
  
             $pago = [
                 'registro_id' => $registro->id,
@@ -269,7 +313,7 @@ class IngresoController extends Controller
                 'estado'      => 'exitoso',
             ];
  
-            if ($esVisitante) {
+            if ($usarEfectivo) {
                 // Efectivo: no hay saldo que mover.
                 $pago['metodo'] = 'efectivo';
             } else {
@@ -295,8 +339,12 @@ class IngresoController extends Controller
             $registro->espacio?->liberar();
         });
  
-        $metodo = $esVisitante ? 'en efectivo' : 'de la tarjeta';
- 
+        $metodo = $usarEfectivo ? 'en efectivo' : 'de la tarjeta';
+
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
+        }
+
         return back()->with(
             'exito',
             "Salida de {$registro->placa}: {$cobro['periodos']} periodo(s), " .
