@@ -35,6 +35,12 @@ class DashboardController extends Controller
  
         $recargas = Recarga::exitosas()->deHoy();
  
+        $movimientosRfid = RegistroIngreso::with(['vehiculo.usuario', 'espacio', 'tarjeta.usuario', 'pago'])
+            ->whereNotNull('tarjeta_id')
+            ->orderByDesc('updated_at')
+            ->limit(10)
+            ->get();
+
         return view('dashboard.index', [
             // --- KPI: ocupacion ---
             'ocupadosCount'       => $ocupados,
@@ -62,6 +68,10 @@ class DashboardController extends Controller
  
             // --- Lista lateral ---
             'vehiculosDentro' => $this->paraLista($activos),
+
+            // --- Hardware RFID ---
+            'movimientosRfid' => $movimientosRfid,
+            'ultimoMovimiento' => $movimientosRfid->first(),
         ]);
     }
 

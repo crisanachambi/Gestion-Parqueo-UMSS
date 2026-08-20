@@ -128,7 +128,7 @@ class PruebaSeeder extends Seeder
             [
                 'usuario_id'  => $clienteId,
                 'parqueo_id'  => $economia,
-                'codigo_rfid' => 'RFID-ECO-0001',
+                'codigo_rfid' => 'DB652D1F',
                 'saldo'       => 50.00,
                 'estado'      => 'activa',
                 'created_at'  => now(),

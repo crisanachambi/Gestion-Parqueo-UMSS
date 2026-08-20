@@ -29,4 +29,11 @@
     @include('dashboard.partials.vehiculos-dentro')
   </div>
 </div>
+
+<!-- 3. SECCIÓN RFID -->
+<div class="row">
+  <div class="col-12 mb-4">
+    @include('dashboard.partials.movimientos-rfid')
+  </div>
+</div>
 @endsection
