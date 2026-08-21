@@ -1,0 +1,134 @@
+/* ==========================================================================
+   ParkUMSS - Estilos Mapa de Espacios (dashboard.css)
+   Alineado con el Tema 47Admin y el Color Corporativo UMSS (#0b1b3d)
+   ========================================================================== */
+
+/* Color principal del proyecto */
+:root {
+   --umss-navy: #0b1b3d;
+   --color-libre: #2ecc71;
+   --color-libre-bg: #eafaf1;
+   --color-ocupado: #e74c3c;
+   --color-ocupado-bg: #fdedec;
+   --color-mantenimiento: #7f8c8d;
+   --color-mantenimiento-bg: #f2f4f4;
+}
+
+/* Encabezado Personalizado */
+.dashboard-header-title {
+   color: var(--umss-navy);
+   font-weight: 700;
+}
+
+/* Contenedor de la Grilla de Espacios */
+.espacios-grid-container {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 12px;
+}
+
+/* Caja de Espacio Individual */
+.espacio-item-box {
+   width: 92px;
+   height: 92px;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding: 6px;
+   box-sizing: border-box;
+   transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.espacio-item-box:hover {
+   transform: translateY(-2px);
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.espacio-item-box .icono-vehiculo {
+   font-size: 20px;
+   margin-bottom: 3px;
+}
+
+.espacio-item-box .codigo-espacio {
+   font-weight: 800;
+   font-size: 13px;
+   line-height: 1;
+}
+
+.espacio-item-box .placa-vehiculo {
+   font-size: 9.5px;
+   font-weight: 700;
+   margin-top: 4px;
+   text-transform: uppercase;
+   letter-spacing: -0.2px;
+}
+
+/* Estados de los Espacios */
+.espacio-item-box.estado-libre {
+   background-color: var(--color-libre-bg);
+   border: 1.5px solid var(--color-libre);
+   color: #27ae60;
+}
+
+.espacio-item-box.estado-ocupado {
+   background-color: var(--color-ocupado-bg);
+   border: 1.5px solid var(--color-ocupado);
+   color: #c0392b;
+}
+
+.espacio-item-box.estado-mantenimiento {
+   background-color: var(--color-mantenimiento-bg);
+   border: 1.5px solid var(--color-mantenimiento);
+   color: var(--color-mantenimiento);
+}
+
+/* Badges y Leyenda */
+.badge-status-pill {
+   border-radius: 20px;
+   padding: 4px 12px;
+   font-weight: 700;
+   font-size: 12px;
+   display: inline-block;
+}
+
+.badge-status-libre {
+   background-color: var(--color-libre-bg);
+   color: #27ae60;
+}
+
+.badge-status-ocupado {
+   background-color: var(--color-ocupado-bg);
+   color: #c0392b;
+}
+
+.dot-indicator {
+   width: 10px;
+   height: 10px;
+   border-radius: 50%;
+   display: inline-block;
+}
+
+.dot-libre { background-color: var(--color-libre); }
+.dot-ocupado { background-color: var(--color-ocupado); }
+.dot-mantenimiento { background-color: var(--color-mantenimiento); }
+
+/* Ajustes Responsivos */
+@media (max-width: 767.98px) {
+   .espacios-grid-container {
+      gap: 8px;
+   }
+   
+   .espacio-item-box {
+      width: calc(33.33% - 6px); /* 3 columnas en móviles */
+      height: 84px;
+   }
+}
+
+@media (max-width: 480px) {
+   .espacio-item-box {
+      width: calc(50% - 4px); /* 2 columnas en pantallas muy pequeñas */
+      height: 80px;
+   }
+}
