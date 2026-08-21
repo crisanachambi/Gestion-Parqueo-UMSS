@@ -45,12 +45,7 @@
                   <span>Salida</span>
                </a>
             </li>
-            <li class="{{ request()->routeIs('recargas*') ? 'active' : '' }}">
-               <a href="{{ route('recargas.index') }}">
-                  <i class="fas fa-chart-line"></i>
-                  <span>Recargas</span>
-               </a>
-            </li>
+         
             <li class="{{ request()->routeIs('usuarios*') ? 'active' : '' }}">
                <a href="{{ route('usuarios.index') }}">
                   <i class="fas fa-user-friends"></i>

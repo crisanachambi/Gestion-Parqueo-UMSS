@@ -22,6 +22,9 @@ class HardwareController extends Controller
                 'dispositivo_id' => 'required|string',
             ]);
 
+            // Guardar cualquier tarjeta escaneada para que la vista web pueda capturarla
+            \Illuminate\Support\Facades\Cache::put('ultima_tarjeta_escaneada_' . $datos['parqueo_id'], $datos['codigo_rfid'], 60);
+
             // 1 & 2. Buscar tarjeta y verificar existencia
             $tarjeta = Tarjeta::with('usuario.vehiculos')
                 ->where('codigo_rfid', $datos['codigo_rfid'])

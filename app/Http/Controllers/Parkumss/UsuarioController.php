@@ -66,7 +66,17 @@ class UsuarioController extends Controller
             'parqueo' => auth()->user()->parqueoAsignado,
         ]);
     }
- 
+
+    /** Obtiene la última tarjeta no registrada leída por el hardware de este parqueo */
+    public function ultimaTarjetaEscaneada()
+    {
+        $parqueoId = auth()->user()->parqueo_asignado_id;
+        // Obtenemos y borramos de caché para no leerla dos veces
+        $codigo = \Illuminate\Support\Facades\Cache::pull('ultima_tarjeta_escaneada_' . $parqueoId);
+        
+        return response()->json(['codigo' => $codigo]);
+    }
+
     /**
      * Busqueda por CI. Devuelve uno de tres estados, que son
      * las tres variantes que dibuja la vista.
@@ -203,6 +213,24 @@ class UsuarioController extends Controller
         return redirect()->route('usuarios.index')->with('exito', $mensaje);
     }
  
+    /**
+     * Edicion manual de saldo (aumentar o disminuir directamente).
+     */
+    public function editarSaldo(Request $request, Tarjeta $tarjeta)
+    {
+        $request->validate([
+            'nuevo_saldo' => ['required', 'numeric', 'min:0', 'max:5000'],
+        ]);
+
+        $nuevo_total = $tarjeta->saldo + $request->nuevo_saldo;
+
+        $tarjeta->update([
+            'saldo' => $nuevo_total,
+        ]);
+
+        return back()->with('exito', "Se recargaron Bs. {$request->nuevo_saldo}. El nuevo saldo es Bs. {$nuevo_total}.");
+    }
+
     /**
      * Edicion de datos personales. Solo puede hacerlo el
      * parqueo que registro a la persona, para que dos

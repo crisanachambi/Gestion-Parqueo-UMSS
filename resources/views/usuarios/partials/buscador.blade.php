@@ -1,6 +1,6 @@
 <div class="card mb-4 border-0 shadow-sm">
-    <div class="card-body">
-        <form action="{{ route('usuarios.buscar') }}" method="GET" class="form-inline justify-content-center">
+    <div class="card-body d-flex justify-content-between align-items-center">
+        <form action="{{ route('usuarios.buscar') }}" method="GET" class="form-inline flex-grow-1 mr-3">
             <div class="input-group w-75">
                 <div class="input-group-prepend">
                     <span class="input-group-text bg-umss-navy text-white">
@@ -20,5 +20,8 @@
                 </div>
             </div>
         </form>
+        <button type="button" class="btn btn-success btn-lg px-4 shadow-sm" data-toggle="modal" data-target="#modalAgregarUsuario">
+            <i class="fas fa-user-plus mr-1"></i> Nuevo Usuario
+        </button>
     </div>
 </div>

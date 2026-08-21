@@ -61,7 +61,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [UsuarioController::class, 'index'])->name('index');
         Route::get('buscar', [UsuarioController::class, 'buscar'])->name('buscar');
         Route::post('buscar-ci', [UsuarioController::class, 'buscarPorCi'])->name('buscarCi');
+        Route::get('ultima-tarjeta', [UsuarioController::class, 'ultimaTarjetaEscaneada'])->name('ultimaTarjeta');
         Route::post('/', [UsuarioController::class, 'store'])->name('store');
+        Route::post('{tarjeta}/editar-saldo', [UsuarioController::class, 'editarSaldo'])->name('editarSaldo');
         Route::post('{tarjeta}/bloquear', [UsuarioController::class, 'bloquear'])->name('bloquear');
         Route::post('{tarjeta}/desbloquear', [UsuarioController::class, 'desbloquear'])->name('desbloquear');
     });
@@ -69,6 +71,7 @@ Route::middleware('auth')->group(function () {
     // ---- Recargas ----
     Route::prefix('recargas')->name('recargas.')->group(function () {
         Route::get('/', [RecargaController::class, 'index'])->name('index');
+        Route::get('buscar-rfid', [RecargaController::class, 'buscarRfid'])->name('buscarRfid');
         Route::post('{tarjeta}', [RecargaController::class, 'store'])->name('store');
     });
  

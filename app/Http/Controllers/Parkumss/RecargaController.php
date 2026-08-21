@@ -103,7 +103,7 @@ class RecargaController extends Controller
             ]);
         });
  
-        return redirect()->route('recargas.index')->with(
+        return back()->with(
             'exito',
             "Recarga de {$datos['monto']} Bs a {$tarjeta->usuario->nombre_completo}. " .
             "Nuevo saldo: {$tarjeta->fresh()->saldo} Bs."

@@ -143,29 +143,39 @@ class IngresoController extends Controller
             return $this->error($error);
         }
  
-        if ($this->placaEstaDentro($vehiculo->placa)) {
-            return $this->error("El vehiculo {$vehiculo->placa} ya esta dentro.");
-        }
+        $registroActivo = RegistroIngreso::activos()
+            ->where(function ($q) use ($vehiculo) {
+                $q->where('vehiculo_id', $vehiculo->id)
+                  ->orWhere('placa_visitante', $vehiculo->placa);
+            })
+            ->first();
+
+        DB::transaction(function () use ($tarjeta, $vehiculo, $espacio, $registroActivo) {
+            if ($registroActivo) {
+                // Si el ESP32 ya registró el ingreso automáticamente, solo actualizamos el espacio manual
+                if ($registroActivo->espacio_id !== $espacio->id) {
+                    $registroActivo->espacio?->liberar();
+                    $registroActivo->update(['espacio_id' => $espacio->id]);
+                    $espacio->ocupar();
+                }
+            } else {
+                // Ingreso completamente manual desde la web
+                RegistroIngreso::create([
+                    'tarjeta_id'   => $tarjeta->id,
+                    'vehiculo_id'  => $vehiculo->id,
+                    'espacio_id'   => $espacio->id,
+                    'hora_ingreso' => now(),
+                    'estado'       => 'activo',
+                ]);
+                $espacio->ocupar();
+            }
+        });
  
-        // Avisa si no le alcanza para un periodo, pero deja
-        // entrar: podra recargar antes de salir.
         $tarifa = $tarjeta->parqueo->tarifaPara($vehiculo->tipo);
         $aviso  = $tarjeta->saldo < $tarifa
             ? " Atencion: saldo de {$tarjeta->saldo} Bs, insuficiente para un periodo."
             : '';
- 
-        DB::transaction(function () use ($tarjeta, $vehiculo, $espacio) {
-            RegistroIngreso::create([
-                'tarjeta_id'   => $tarjeta->id,
-                'vehiculo_id'  => $vehiculo->id,
-                'espacio_id'   => $espacio->id,
-                'hora_ingreso' => now(),
-                'estado'       => 'activo',
-            ]);
- 
-            $espacio->ocupar();
-        });
- 
+
         return response()->json([
             'success'        => true,
             'espacio_numero' => $espacio->numero,

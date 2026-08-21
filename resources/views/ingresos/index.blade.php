@@ -97,4 +97,34 @@
 
 @push('scripts')
    <script src="{{ asset('js/ingresos.js') }}"></script>
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+         const inputRfid = document.getElementById('input_rfid');
+         
+         if (inputRfid) {
+             function pollUltimaLectura() {
+                 // Si no estamos en modo RFID o ya hay una tarjeta cargada en la vista, no hacemos polling
+                 if (document.getElementById('tipo_ingreso').value !== 'rfid') return;
+                 
+                 // Si el panel de información del usuario ya está visible, ya se seleccionó una tarjeta
+                 const panelInfo = document.getElementById('panel-info-usuario');
+                 if (panelInfo && !panelInfo.classList.contains('hidden')) return;
+
+                 fetch('{{ route("usuarios.ultimaTarjeta") }}') // Endpoint general que jala ultima_tarjeta_escaneada_
+                     .then(response => response.json())
+                     .then(data => {
+                         if (data.codigo) {
+                             inputRfid.value = data.codigo;
+                             // Disparamos la búsqueda que ya existe en js/ingresos.js
+                             consultarUsuarioRfid(data.codigo);
+                         }
+                     })
+                     .catch(err => console.error('Error polling RFID:', err));
+             }
+
+             // Polling cada 1.5 segundos
+             setInterval(pollUltimaLectura, 1500);
+         }
+      });
+   </script>
 @endpush

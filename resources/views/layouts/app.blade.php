@@ -48,6 +48,9 @@
 
   </div>
 
+  <!-- Modals Stack -->
+  @stack('modals')
+
   <!-- Scripts Base de 47admin y Bootstrap -->
   <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
   <script src="{{ asset('vendor/popper.js/dist/umd/popper.js') }}"></script>

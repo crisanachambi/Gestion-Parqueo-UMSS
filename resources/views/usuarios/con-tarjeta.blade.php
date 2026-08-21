@@ -32,11 +32,8 @@
                         </div>
                     </div>
                     <div class="col-md-6 d-flex align-items-center">
-                        <button class="btn btn-umss btn-block py-3 font-weight-bold" data-toggle="modal" data-target="#modalRecarga">
-                            <a href="{{ route('recargas.index', ['tarjeta' => $tarjeta->id]) }}"
-                                class="btn btn-umss btn-block py-3 font-weight-bold">
-                                <i class="fas fa-wallet mr-1"></i> Recargar Saldo
-                            </a>
+                        <button type="button" class="btn btn-umss btn-block py-3 font-weight-bold shadow-sm" data-toggle="modal" data-target="#modalEditarSaldo">
+                            <i class="fas fa-edit mr-2"></i> Editar Saldo Directamente
                         </button>
                     </div>
                 </div>
