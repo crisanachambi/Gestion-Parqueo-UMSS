@@ -33,14 +33,14 @@
                   <span>Dashboard</span>
                </a>
             </li>
-            <li class="{{ request()->routeIs('ingreso*') ? 'active' : '' }}">
-               <a href="{{ route('ingreso.index') }}">
+            <li class="{{ request()->routeIs('ingresos*') ? 'active' : '' }}">
+               <a href="{{ route('ingresos.index') }}">
                   <i class="far fa-id-card"></i>
                   <span>Ingreso</span>
                </a>
             </li>
-            <li class="{{ request()->routeIs('salida*') ? 'active' : '' }}">
-               <a href="{{ route('salida.index') }}">
+            <li class="{{ request()->routeIs('salidas*') ? 'active' : '' }}">
+               <a href="{{ route('salidas.index') }}">
                   <i class="fas fa-clipboard-check"></i>
                   <span>Salida</span>
                </a>
