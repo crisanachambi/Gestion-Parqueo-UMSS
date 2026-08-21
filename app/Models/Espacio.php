@@ -32,12 +32,24 @@ class Espacio extends Model
         return $this->hasOne(RegistroIngreso::class)->where('estado', 'activo');
     }
  
+    /** Alias: la grilla de ingresos usa `ultimoIngreso` */
+    public function ultimoIngreso()
+    {
+        return $this->registroActivo();
+    }
+ 
     // ---------------- Accesores para las vistas ----------------
  
     /** Alias de `numero`: la vista del mapa usa `codigo` */
     public function getCodigoAttribute(): string
     {
         return $this->numero;
+    }
+ 
+    /** Alias de `tipo`: la vista de ingresos usa `tipo_vehiculo` */
+    public function getTipoVehiculoAttribute(): string
+    {
+        return $this->tipo;
     }
  
     /** Placa del vehiculo que lo ocupa, o cadena vacia */
