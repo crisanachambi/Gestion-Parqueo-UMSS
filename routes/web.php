@@ -41,16 +41,15 @@ Route::middleware('auth')->group(function () {
  
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
  
-    // ---- Ingresos ----
-    Route::prefix('ingreso')->name('ingreso.')->group(function () {
+        // ---- Ingresos ----
+    Route::prefix('ingresos')->name('ingresos.')->group(function () {
         Route::get('/', [IngresoController::class, 'index'])->name('index');
-        Route::post('buscar', [IngresoController::class, 'buscar'])->name('buscar');
-        Route::post('entrada', [IngresoController::class, 'entrada'])->name('entrada');
-        Route::post('visitante', [IngresoController::class, 'entradaVisitante'])->name('visitante');
+        Route::post('/', [IngresoController::class, 'store'])->name('store');
+        Route::get('rfid/buscar', [IngresoController::class, 'buscarRfid'])->name('rfid');
     });
- 
+
     // ---- Salidas ----
-    Route::prefix('salida')->name('salida.')->group(function () {
+    Route::prefix('salidas')->name('salidas.')->group(function () {
         Route::get('/', [IngresoController::class, 'salidas'])->name('index');
         Route::post('{registro}', [IngresoController::class, 'salida'])->name('registrar');
     });
