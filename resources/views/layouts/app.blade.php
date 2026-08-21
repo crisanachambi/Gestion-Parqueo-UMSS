@@ -47,6 +47,10 @@
 
   <!-- Scripts Base de 47admin y Bootstrap -->
   <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('vendor/jquery/dist/jquery.js') }}"></script>
+  script src="{{ asset('vendor/popper.js/dist/umd/popper.js') }}"></script>
+  <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
+  <script src="{{ asset('js/app.js') }}"></script>
 
   <!-- Script para el Reloj en Tiempo Real -->
   <script>
@@ -67,6 +71,7 @@
       setInterval(updateClock, 1000);
       updateClock();
     });
+    
   </script>
 
   @stack('scripts')
