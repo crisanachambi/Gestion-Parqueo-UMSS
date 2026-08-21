@@ -17,7 +17,7 @@ return new class extends Migration
                   ->constrained('parqueos')->cascadeOnUpdate()->restrictOnDelete();
             $table->string('numero', 10);           // A-01, M-01...
             $table->enum('tipo', ['moto', 'auto'])->default('auto');
-            $table->enum('estado', ['libre', 'ocupado'])->default('libre');
+            $table->enum('estado', ['libre', 'ocupado', 'mantenimiento'])->default('libre');
  
             $table->timestamps();
             $table->softDeletes();
