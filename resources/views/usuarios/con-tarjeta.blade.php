@@ -2,7 +2,10 @@
 
 <div class="card border-success mb-4">
     <div class="card-header bg-umss-navy text-white font-weight-bold d-flex justify-content-between align-items-center">
-        <span><i class="fas fa-id-badge mr-2"></i>Perfil de Usuario - Tarjeta RFID Activa</span>
+        <span>
+            <a href="{{ route('usuarios.index') }}" class="btn btn-sm btn-light mr-2 text-dark"><i class="fas fa-arrow-left"></i> Regresar atrás</a>
+            <i class="fas fa-id-badge mr-2"></i>Perfil de Usuario - Tarjeta RFID Activa
+        </span>
         <span class="badge badge-success px-3 py-2"><i class="fas fa-check-circle"></i> Operativo</span>
     </div>
     <div class="card-body">
@@ -31,9 +34,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 d-flex align-items-center">
-                        <button type="button" class="btn btn-umss btn-block py-3 font-weight-bold shadow-sm" data-toggle="modal" data-target="#modalEditarSaldo">
+                    <div class="col-md-6 d-flex flex-column justify-content-center">
+                        <button type="button" class="btn btn-umss btn-block py-2 font-weight-bold shadow-sm mb-2" data-toggle="modal" data-target="#modalEditarSaldo">
                             <i class="fas fa-edit mr-2"></i> Editar Saldo Directamente
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-block py-2 font-weight-bold shadow-sm" data-toggle="modal" data-target="#modalEditarUsuario">
+                            <i class="fas fa-user-edit mr-2"></i> Editar Datos
                         </button>
                     </div>
                 </div>

@@ -249,9 +249,66 @@ class UsuarioController extends Controller
             'apellido'  => ['nullable', 'string', 'max:100'],
             'telefono'  => ['nullable', 'string', 'max:20'],
             'categoria' => ['nullable', 'in:estudiante,docente,administrativo,visitante'],
+            'vehiculos'           => ['nullable', 'array'],
+            'vehiculos.*.placa'   => ['nullable', 'string', 'max:15'],
+            'vehiculos.*.tipo'    => ['nullable', 'in:moto,auto'],
+            'vehiculos.*.marca'   => ['nullable', 'string', 'max:60'],
+            'vehiculos.*.color'   => ['nullable', 'string', 'max:40'],
+            'codigo_rfid'         => ['nullable', 'string', 'max:32'],
         ]);
  
-        $usuario->update($datos);
+        $usuario->update([
+            'nombre' => $datos['nombre'],
+            'apellido' => $datos['apellido'] ?? null,
+            'telefono' => $datos['telefono'] ?? null,
+            'categoria' => $datos['categoria'] ?? null,
+        ]);
+
+        // Actualizar vehículo principal si se proporciona la placa
+        if (!empty($datos['vehiculos'][0]['placa'])) {
+            $v = $datos['vehiculos'][0];
+            $vehiculo = $usuario->vehiculos()->first();
+            
+            if ($vehiculo) {
+                $vehiculo->update([
+                    'placa' => strtoupper(trim($v['placa'])),
+                    'tipo' => $v['tipo'] ?? 'auto',
+                    'marca' => $v['marca'] ?? null,
+                    'color' => $v['color'] ?? null,
+                ]);
+            } else {
+                Vehiculo::create([
+                    'usuario_id' => $usuario->id,
+                    'placa' => strtoupper(trim($v['placa'])),
+                    'tipo' => $v['tipo'] ?? 'auto',
+                    'marca' => $v['marca'] ?? null,
+                    'color' => $v['color'] ?? null,
+                ]);
+            }
+        }
+
+        // Actualizar tarjeta RFID si se proporciona
+        if (!empty($datos['codigo_rfid'])) {
+            $tarjeta = $usuario->tarjetaActual;
+            
+            if ($tarjeta) {
+                if ($tarjeta->codigo_rfid !== $datos['codigo_rfid']) {
+                    // Si cambia la tarjeta, actualiza el código y reinicia el saldo a 0
+                    $tarjeta->update([
+                        'codigo_rfid' => $datos['codigo_rfid'],
+                        'saldo' => 0
+                    ]);
+                }
+            } else {
+                // Si el usuario no tenía tarjeta activa, se le asigna una nueva
+                Tarjeta::create([
+                    'usuario_id' => $usuario->id,
+                    'codigo_rfid' => $datos['codigo_rfid'],
+                    'saldo' => 0,
+                    'estado' => 'activa',
+                ]);
+            }
+        }
  
         return back()->with('exito', 'Datos actualizados.');
     }

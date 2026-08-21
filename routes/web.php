@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::post('buscar-ci', [UsuarioController::class, 'buscarPorCi'])->name('buscarCi');
         Route::get('ultima-tarjeta', [UsuarioController::class, 'ultimaTarjetaEscaneada'])->name('ultimaTarjeta');
         Route::post('/', [UsuarioController::class, 'store'])->name('store');
+        Route::put('{usuario}', [UsuarioController::class, 'update'])->name('update');
         Route::post('{tarjeta}/editar-saldo', [UsuarioController::class, 'editarSaldo'])->name('editarSaldo');
         Route::post('{tarjeta}/bloquear', [UsuarioController::class, 'bloquear'])->name('bloquear');
         Route::post('{tarjeta}/desbloquear', [UsuarioController::class, 'desbloquear'])->name('desbloquear');

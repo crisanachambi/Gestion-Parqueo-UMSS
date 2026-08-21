@@ -76,4 +76,9 @@
     @if(isset($usuario) && $usuario->tarjetaActual)
         @include('usuarios.partials.modal_editar_saldo', ['tarjeta' => $usuario->tarjetaActual])
     @endif
+
+    {{-- Modal para editar datos de usuario --}}
+    @if(isset($usuario))
+        @include('usuarios.partials.modal_editar_usuario', ['usuario' => $usuario])
+    @endif
 @endpush

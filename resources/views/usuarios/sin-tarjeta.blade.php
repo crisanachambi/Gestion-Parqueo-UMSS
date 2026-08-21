@@ -1,6 +1,9 @@
 <div class="card border-warning mb-4">
     <div class="card-header bg-warning text-dark font-weight-bold d-flex justify-content-between align-items-center">
-        <span><i class="fas fa-exclamation-circle mr-2"></i>Usuario Encontrado - Sin Tarjeta RFID Asignada</span>
+        <span>
+            <a href="{{ route('usuarios.index') }}" class="btn btn-sm btn-dark mr-2"><i class="fas fa-arrow-left"></i> Regresar atrás</a>
+            <i class="fas fa-exclamation-circle mr-2"></i>Usuario Encontrado - Sin Tarjeta RFID Asignada
+        </span>
         <span class="badge badge-dark">C.I.: {{ $usuario->ci }}</span>
     </div>
     <div class="card-body">
@@ -32,8 +35,11 @@
         
         <hr>
 
-        <!-- Botón de Asignación Directa -->
-        <div class="text-right">
+        <!-- Botones de Acción -->
+        <div class="text-right d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-secondary btn-lg mr-2" data-toggle="modal" data-target="#modalEditarUsuario">
+                <i class="fas fa-user-edit mr-1"></i> Editar Datos
+            </button>
             <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modalAsignarRfid">
                 <i class="fas fa-plus-circle mr-1"></i> Emitir / Asignar Tarjeta RFID
             </button>
