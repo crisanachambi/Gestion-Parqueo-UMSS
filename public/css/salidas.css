@@ -1,0 +1,161 @@
+/* ==========================================
+   1. ESTILOS BASE Y COLORES CORPORATIVOS
+   ========================================== */
+.text-umss-navy { 
+    color: #0b1b3d !important; 
+}
+
+.bg-umss-navy { 
+    background-color: #0b1b3d !important; 
+    color: #ffffff;
+}
+
+.text-warning-dark { 
+    color: #e65100 !important; 
+}
+
+.text-light-gray { 
+    color: #d1d5db !important; 
+}
+
+.extra-small { 
+    font-size: 0.725rem !important; 
+    line-height: 1.2;
+}
+
+.font-monospace { 
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important; 
+    letter-spacing: 0.5px;
+}
+
+.shadow-xs { 
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important; 
+}
+
+/* ==========================================
+   2. ESTRUCTURA Y MODALES (47ADMIN CUSTOM)
+   ========================================== */
+.modal-rounded { 
+    border-radius: 12px !important; 
+    overflow: hidden;
+}
+
+.box-icono-vehiculo { 
+    width: 56px; 
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-total-cobro { 
+    background-color: #e8f5e9; 
+    border: 1px solid #c8e6c9;
+}
+
+.btn-white {
+    background-color: #ffffff;
+    border-color: #d1d5db;
+    color: #374151;
+}
+
+.btn-white:hover {
+    background-color: #f9fafb;
+    color: #111827;
+}
+
+/* ==========================================
+   3. ESTILOS DE LOS 3 ESCENARIOS DE SALIDA
+   ========================================== */
+
+/* ESCENARIO 1: Cobro en Efectivo */
+#escenario-efectivo .box-total-cobro {
+    background-color: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+/* ESCENARIO 2: Saldo Insuficiente */
+.box-alerta-saldo {
+    background-color: #fdf2f2;
+    border: 1px solid #f8b4b4;
+}
+
+.border-warning {
+    border-color: #f59e0b !important;
+}
+
+/* ESCENARIO 3: Tarjeta RFID y Lectura */
+.bg-soft-blue { 
+    background-color: #eff6ff; 
+    border: 1px solid #bfdbfe;
+}
+
+.bg-soft-success { 
+    background-color: #f0fdf4; 
+    border: 1px solid #bbf7d0;
+}
+
+.bg-soft-danger { 
+    background-color: #fef2f2; 
+    border: 1px solid #fecaca;
+}
+
+.card-rfid-state {
+    transition: all 0.3s ease-in-out;
+}
+
+.icon-check-circle {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+}
+
+/* Animación para el sensor del Lector RFID */
+.icon-pulse {
+    animation: pulse-rfid 1.6s infinite ease-in-out;
+}
+
+@keyframes pulse-rfid {
+    0% { 
+        opacity: 0.3; 
+        transform: scale(0.92); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.1); 
+    }
+    100% { 
+        opacity: 0.3; 
+        transform: scale(0.92); 
+    }
+}
+
+/* ==========================================
+   4. BADGES MODERNOS (ETIQUETAS TABLA)
+   ========================================== */
+.badge-soft-primary { 
+    background-color: #ebf5ff; 
+    color: #0066cc; 
+}
+
+.badge-soft-warning { 
+    background-color: #fff8e1; 
+    color: #b78103; 
+}
+
+.badge-soft-danger { 
+    background-color: #ffebee; 
+    color: #c62828; 
+}
+
+.badge-soft-info { 
+    background-color: #e0f7fa; 
+    color: #00838f; 
+}
+
+.badge-danger-light { 
+    background-color: #ffe8e8; 
+    color: #d9534f; 
+    border: 1px solid #f5c6cb; 
+    font-size: 0.725rem; 
+}
