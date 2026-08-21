@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Parkumss\Auth\ControllerLogin;
 use App\Http\Controllers\Parkumss\DashboardController;
 use App\Http\Controllers\Parkumss\IngresoController;
-use App\Http\Controllers\Parkumss\TarjetaController;
+use App\Http\Controllers\Parkumss\RecargaController;
+use App\Http\Controllers\Parkumss\UsuarioController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -51,21 +52,24 @@ Route::middleware('auth')->group(function () {
     // ---- Salidas ----
     Route::prefix('salidas')->name('salidas.')->group(function () {
         Route::get('/', [IngresoController::class, 'salidas'])->name('index');
+        Route::get('{registro}/preview', [IngresoController::class, 'previewSalida'])->name('preview');
         Route::post('{registro}', [IngresoController::class, 'salida'])->name('registrar');
     });
  
     // ---- Usuarios y tarjetas ----
     Route::prefix('usuarios')->name('usuarios.')->group(function () {
-        Route::get('/', [TarjetaController::class, 'index'])->name('index');
-        Route::post('buscar-ci', [TarjetaController::class, 'buscarPorCi'])->name('buscarCi');
-        Route::post('/', [TarjetaController::class, 'store'])->name('store');
-        Route::post('{tarjeta}/bloquear', [TarjetaController::class, 'bloquear'])->name('bloquear');
+        Route::get('/', [UsuarioController::class, 'index'])->name('index');
+        Route::get('buscar', [UsuarioController::class, 'buscar'])->name('buscar');
+        Route::post('buscar-ci', [UsuarioController::class, 'buscarPorCi'])->name('buscarCi');
+        Route::post('/', [UsuarioController::class, 'store'])->name('store');
+        Route::post('{tarjeta}/bloquear', [UsuarioController::class, 'bloquear'])->name('bloquear');
+        Route::post('{tarjeta}/desbloquear', [UsuarioController::class, 'desbloquear'])->name('desbloquear');
     });
  
     // ---- Recargas ----
     Route::prefix('recargas')->name('recargas.')->group(function () {
-        Route::get('/', [TarjetaController::class, 'recargas'])->name('index');
-        Route::post('{tarjeta}', [TarjetaController::class, 'recargar'])->name('store');
+        Route::get('/', [RecargaController::class, 'index'])->name('index');
+        Route::post('{tarjeta}', [RecargaController::class, 'store'])->name('store');
     });
  
     // ---- Pendientes de implementar ----
