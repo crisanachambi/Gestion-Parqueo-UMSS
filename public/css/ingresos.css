@@ -1,0 +1,67 @@
+/* Tarjetas de Espacios */
+.space-card {
+   border: 2px solid #dde6e9;
+   border-radius: 8px;
+   background-color: #ffffff;
+   transition: all 0.2s ease-in-out;
+   cursor: pointer;
+}
+
+.space-card:hover {
+   border-color: #0b1b3d !important;
+   transform: translateY(-2px);
+}
+
+.space-card.selected {
+   border-color: #0b1b3d !important;
+   background-color: #f4f6f9 !important;
+   box-shadow: 0 4px 10px rgba(11, 27, 61, 0.15);
+}
+
+/* Banner Superior de Espacio Seleccionado */
+.banner-seleccionado {
+   background-color: #e8f8f5;
+   border: 1px solid #27c24c;
+   border-radius: 8px;
+   padding: 12px 16px;
+   color: #1e7e34;
+}
+
+/* Ficha del Usuario RFID */
+.card-usuario-rfid {
+   background-color: #e8f8f5;
+   border: 1px solid #27c24c;
+   border-radius: 8px;
+}
+
+/* Estados Globales */
+.hidden {
+   display: none !important;
+}
+
+/* Estados de las tarjetas de espacio */
+.space-card.libre {
+   border: 2px solid #27c24c !important;
+   background-color: #e8f8f5 !important;
+   cursor: pointer;
+}
+
+.space-card.ocupado {
+   border: 2px solid #ff8f8f !important;
+   background-color: #ffebeb !important;
+   cursor: not-allowed;
+}
+
+.space-card.mantenimiento {
+   border: 2px solid #e4e8f0 !important;
+   background-color: #f4f5f8 !important;
+   opacity: 0.75;
+   cursor: not-allowed;
+}
+
+/* Evita efecto hover en tarjetas deshabilitadas */
+.space-card.ocupado:hover,
+.space-card.mantenimiento:hover {
+   transform: none !important;
+   border-color: inherit;
+}

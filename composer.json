@@ -12,6 +12,10 @@
         "laravel/tinker": "^2.8"
     },
     "require-dev": {
+<<<<<<< HEAD
+=======
+        "bennett-treptow/laravel-migration-generator": "^4.5",
+>>>>>>> 02f17e8fea3785350b13a04082ae7d35fec22650
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

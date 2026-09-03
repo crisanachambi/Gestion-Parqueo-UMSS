@@ -1,0 +1,344 @@
+/* =====================================================================
+   PARKUMSS - ESTILOS GENERALES Y OVERRIDE RESPONSIVE DE 47ADMIN
+   ===================================================================== */
+/* ==========================================================================
+   ParkUMSS — Ajustes de Responsividad Base (47Admin Template)
+   ========================================================================== */
+
+/* 1. Comportamiento del Sidebar y Layout en Móviles */
+@media (max-width: 991.98px) {
+  /* Ocultar el menú lateral por defecto en pantallas pequeñas */
+  .aside-container.aside-custom {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    width: 250px;
+    height: 100vh;
+    z-index: 1050;
+    transition: left 0.3s ease-in-out;
+  }
+
+  /* Mostrar cuando se activa la clase `.aside-toggled` en el <body> */
+  body.aside-toggled .aside-container.aside-custom {
+    left: 0;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Ajustar el contenedor principal para que use todo el ancho */
+  .section-container {
+    margin-left: 0 !important;
+    padding-top: 60px; /* Offset para el Navbar superior fixed */
+  }
+
+  /* Ajuste de Topbar */
+  .topnavbar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1040;
+    width: 100%;
+  }
+}
+
+/* 2. Ajustes de Tipografía y Elementos del Topbar en Pantallas Pequeñas */
+@media (max-width: 575.98px) {
+  .clock-digital {
+    font-size: 0.85rem;
+  }
+
+  .badge-topbar-red {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Reducir padding de la sección principal en celulares */
+  .content-wrapper {
+    padding: 10px;
+  }
+}
+
+/* 3. Garantizar tablas escaneables y adaptables en pantallas estrechas */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 4. Imágenes e Iconos Responsivos */
+.brand-img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+
+
+
+:root {
+   --ummss-logo-bg: #030611;
+   --ummss-navy: #0b1b3d;
+   --ummss-navy-light: #13275c;
+   --ummss-blue: #2f6fed;
+   --ummss-red: #c62030;
+   --ummss-white: #f4f6fb;
+   --ummss-gray: #8a93a6;
+   --sidebar-width: 270px;
+}
+
+/* ---------------------------------------------------------------------
+   1. ESTILOS BASE (MÓVILES / PANTALLAS PEQUEÑAS < 992px)
+   --------------------------------------------------------------------- */
+
+/* Sidebar por defecto en móvil */
+.aside-container,
+.aside-custom {
+   background-color: var(--ummss-logo-bg) !important;
+   border: none !important;
+   z-index: 1050;
+}
+
+.aside-inner,
+.aside-inner-custom {
+   background-color: var(--ummss-logo-bg) !important;
+}
+
+/* Header por defecto en móvil */
+.topnavbar-wrapper,
+.topnavbar-custom {
+   background-color: var(--ummss-logo-bg) !important;
+   min-height: 60px;
+   border: none !important;
+}
+
+.section-container {
+   margin-left: 0;
+   padding: 15px;
+}
+
+.style-dot {
+   font-size: 7px;
+   vertical-align: middle;
+}
+
+.clock-digital {
+   color: #ffffff;
+   font-family: 'Courier New', Courier, monospace;
+   font-weight: 600;
+   font-size: 12px;
+   letter-spacing: 0.5px;
+}
+
+.badge-topbar-red {
+   border: 1px solid var(--ummss-red);
+   color: #ff4d4d;
+   background: rgba(198, 32, 48, 0.15);
+   font-size: 11px;
+   font-weight: 600;
+   padding: 4px 10px;
+   border-radius: 20px;
+   white-space: nowrap;
+}
+
+/* Elementos Internos del Sidebar */
+.sidebar-brand-card {
+   background-color: rgba(255, 255, 255, 0.02);
+   border: 1px solid rgba(255, 255, 255, 0.06);
+   border-radius: 12px;
+   padding: 14px 12px;
+   margin: 10px 14px 8px 14px;
+   text-align: center;
+}
+
+.sidebar-brand-card .brand-img {
+   width: 100%;
+   max-width: 190px;
+   height: auto;
+   border-radius: 6px;
+   display: inline-block;
+   margin-bottom: 6px;
+   mix-blend-mode: lighten;
+}
+
+.sidebar-brand-card .brand-sub {
+   color: var(--ummss-gray);
+   font-size: 11.5px;
+   display: block;
+   margin-top: 2px;
+}
+
+.sidebar-parqueo-card {
+   border: 1px solid rgba(255, 255, 255, 0.1);
+   border-radius: 8px;
+   padding: 8px 12px;
+   margin: 6px 14px 10px 14px;
+}
+
+.sidebar-parqueo-card .label-muted {
+   color: var(--ummss-gray);
+   font-size: 9px;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+   display: block;
+}
+
+.sidebar-parqueo-card .parqueo-name {
+   color: #ffffff;
+   font-size: 12px;
+   font-weight: 700;
+   display: block;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+
+.sidebar-menu-list {
+   list-style: none;
+   padding: 0 12px;
+   margin: 0;
+}
+
+.sidebar-menu-list li {
+   margin-bottom: 3px;
+}
+
+.sidebar-menu-list li a {
+   display: flex !important;
+   align-items: center !important;
+   font-size: 14px;
+   font-weight: 500;
+   padding: 9px 14px;
+   text-decoration: none;
+   border-radius: 8px;
+   color: var(--ummss-gray);
+   transition: all 0.2s ease;
+}
+
+.sidebar-menu-list li a i {
+   display: inline-block !important;
+   font-size: 16px !important;
+   width: 24px !important;
+   min-width: 24px !important;
+   text-align: center !important;
+   margin-right: 12px !important;
+   color: var(--ummss-gray) !important;
+}
+
+.sidebar-menu-list li a:hover,
+.sidebar-menu-list li.active a {
+   color: #ffffff !important;
+   background-color: var(--ummss-blue) !important;
+   font-weight: 700;
+}
+
+.sidebar-menu-list li a:hover i,
+.sidebar-menu-list li.active a i {
+   color: #ffffff !important;
+}
+
+.sidebar-footer-wrapper {
+   position: relative;
+   padding-top: 4px;
+   margin-top: auto;
+}
+
+.slogan-footer {
+   font-size: 10px;
+   font-weight: 800;
+   text-align: center;
+   margin-bottom: 6px;
+   letter-spacing: 0.5px;
+}
+
+.slogan-digital { color: var(--ummss-blue); }
+.slogan-seguro  { color: #ffffff; }
+.slogan-eficiente { color: var(--ummss-red); }
+
+.circuit-bg {
+   height: 22px;
+   width: 100%;
+   background-image: 
+      radial-gradient(circle 3px at 20% 30%, var(--ummss-blue) 98%, transparent 100%),
+      radial-gradient(circle 3px at 80% 40%, var(--ummss-red) 98%, transparent 100%),
+      linear-gradient(90deg, transparent 19%, rgba(47, 111, 237, 0.3) 20%, transparent 21%),
+      linear-gradient(90deg, transparent 79%, rgba(198, 32, 48, 0.3) 80%, transparent 81%);
+   opacity: 0.6;
+   margin-bottom: 4px;
+}
+
+.user-profile-box {
+   padding: 10px 14px;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   background-color: rgba(255, 255, 255, 0.03);
+   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.user-avatar-circle {
+   width: 34px;
+   height: 34px;
+   background-color: #ffffff;
+   color: var(--ummss-navy);
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-weight: 800;
+   font-size: 14px;
+   margin-right: 10px;
+   flex-shrink: 0;
+}
+
+.btn-logout-icon {
+   background: none;
+   border: none;
+   color: var(--ummss-red) !important;
+   font-size: 17px !important;
+   padding: 4px 6px;
+   cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------
+   2. REGLAS EXCLUSIVAS PARA ESCRITORIO (>= 992px)
+   --------------------------------------------------------------------- */
+@media (min-width: 992px) {
+   body.layout-fixed .aside-container,
+   body.layout-fixed .aside-custom,
+   .aside-container,
+   .aside-custom {
+      top: 0 !important;
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+      position: fixed !important;
+      height: 100vh !important;
+      width: var(--sidebar-width) !important;
+      overflow-y: auto;
+   }
+
+   .aside-inner,
+   .aside-inner-custom {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+      min-height: 100vh !important;
+   }
+
+   .topnavbar-wrapper,
+   .topnavbar-custom {
+      margin-left: var(--sidebar-width) !important;
+      width: calc(100% - var(--sidebar-width)) !important;
+      height: 60px !important;
+   }
+
+   .section-container {
+      margin-left: var(--sidebar-width) !important;
+      padding: 20px;
+   }
+
+   .clock-digital {
+      font-size: 13px;
+      margin-right: 12px;
+   }
+}
